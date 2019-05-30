@@ -64,4 +64,18 @@ public class MainActivity extends AppCompatActivity {
         builder.setMessage(message);
         builder.show();
     }
+    public void clearAll(View view){
+        Log.d("MyContactApp", "request to delete received");
+        myDb.deleteAllData();
+
+    }
+    public void searchContact(View view){
+        boolean found = myDb.searchData(editName.getText().toString(),editPhone.getText().toString(),editAddress.getText().toString());
+        if(!found){
+            Log.d("MyContactApp","No contact found");
+        }
+        else{
+
+        }
+    }
 }
