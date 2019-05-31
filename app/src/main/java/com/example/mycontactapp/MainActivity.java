@@ -70,12 +70,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void searchContact(View view){
-        boolean found = myDb.searchData(editName.getText().toString(),editPhone.getText().toString(),editAddress.getText().toString());
-        if(!found){
-            Log.d("MyContactApp","No contact found");
+        Log.d("MyContactApp","request to search received");
+        Cursor res = myDb.getAllData();
+        String name = editName.getText().toString();
+        String phone = editPhone.getText().toString();
+        String address = editAddress.getText().toString();
+        StringBuffer buffer = new StringBuffer();
+        if(name.length() <= 0 && phone.length() <= 0 && address.length() <= 0){
+            Log.d("MyContactApp", "Error, no contact found");
+            return;
         }
-        else{
-
+        while(res.moveToNext()) {
+            if ((name.isEmpty() || name.equals(res.getString(1)))
+                    && phone.isEmpty() || phone.equals(res.getString(2))
+                    && address.isEmpty() || address.equals(res.getString(3))) {
+                buffer.append("ID: " + res.getString(0) + "\n" +
+                        "Name: " + res.getString(1) + "\n" +
+                        "Phone Number: " + res.getString(2) + "\n" +
+                        "Home Address: " + res.getString(3) + "\n\n");
+            }
         }
+        if(buffer.toString().isEmpty()){
+            showMessage("Error","No matches found");
+            return;
+        }
+        res.close();
+        showMessage("Search Results", buffer.toString());
     }
 }

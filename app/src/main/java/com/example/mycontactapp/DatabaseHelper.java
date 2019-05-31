@@ -72,14 +72,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor res = db.rawQuery("select * from  " + TABLE_NAME,null);
         return res;
     }
-    public boolean searchData(String name, String number, String address){
-        if(name.length() == 0 && number.length() == 0 && address.length() == 0) {
-            return false;
-        }
-        
 
-
-
-        return false;
-    }
 }
